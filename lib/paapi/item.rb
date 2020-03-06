@@ -12,7 +12,7 @@ module Paapi
     end
 
     def listings
-      get(['Offers', 'Listings'])&.map {|d| Listing.new(d)}
+      get(['Offers', 'Listings']) && get(['Offers', 'Listings']).map {|d| Listing.new(d)}
     end
 
     def asin
@@ -55,7 +55,7 @@ module Paapi
 
     def contributors_of(kind)
       kind = kind.to_s.gsub(/([[:alpha:]]+)/) { |w| w.capitalize }
-      contributors.select { |e| e['Role'] == kind }&.map { |e| e.dig('Name') }&.reject {|n| n.to_s.empty?}
+      contributors.select { |e| e['Role'] == kind } && contributors.select { |e| e['Role'] == kind }.map { |e| e.dig('Name') }.reject {|n| n.to_s.empty?}
     end
 
     def actors
@@ -87,11 +87,11 @@ module Paapi
     end
 
     def original_language
-      languages&.find {|l| l['Type'] == 'Original Language' }&.dig('DisplayValue')
+      languages.find {|l| l['Type'] == 'Original Language' }.dig('DisplayValue')
     end
 
     def published_language
-      languages&.find {|l| l['Type'] == 'Published' }&.dig('DisplayValue')
+      languages.find {|l| l['Type'] == 'Published' }.dig('DisplayValue')
     end
 
     def eans
@@ -103,7 +103,7 @@ module Paapi
     end
 
     def features
-      get(%w{ItemInfo Features DisplayValues})&.join(' ')
+      get(%w{ItemInfo Features DisplayValues}).join(' ')
     end
 
     def brand
@@ -143,7 +143,7 @@ module Paapi
     end
 
     def kindle?
-      !package.nil? && package&.include?('Kindle eBook')
+      !package.nil? && package.include?('Kindle eBook')
     end
 
     def get(keys)

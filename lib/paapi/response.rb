@@ -7,10 +7,9 @@ module Paapi
     def initialize(response)
       @http_response = response
       @hash = JSON.parse(response.body.to_s)
-
-      @items_data = @hash.dig('ItemsResult', 'Items')
-      @items_data ||= @hash.dig('SearchResult', 'Items')
-      @items_data ||= @hash.dig('VariationsResult', 'Items')
+      @items_data =  @hash["ItemsResult"]["Items"]
+      @items_data ||= @hash['SearchResult']['Items']
+      @items_data ||= @hash['VariationsResult']['Items']
       @items_data ||= []
 
       @items = @items_data.map {|d| Item.new(d)}
@@ -18,7 +17,7 @@ module Paapi
     end
 
     def result_count
-      @hash.dig('SearchResult', 'TotalResultCount')
+      @hash['SearchResult']['TotalResultCount']
     end
   end
 end
