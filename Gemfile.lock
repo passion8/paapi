@@ -3,7 +3,7 @@ PATH
   specs:
     paapi (0.1.1)
       aws-sigv4 (~> 1)
-      http (~> 3)
+      http (= 3.0.0)
 
 GEM
   remote: https://rubygems.org/
